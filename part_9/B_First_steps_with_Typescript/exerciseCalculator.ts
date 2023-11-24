@@ -8,12 +8,29 @@ interface DailyExercise {
     average: number
 }
 
-const target = 2
+const processArguments = ( args: string[] ) => {
 
-const daylyExerciseHours = [3, 0, 2, 4.5, 0, 3, 1];
+    if(args.length < 4) throw new Error("Too many arguments");
+
+    let exerciseArray: number[] = [];
+    let target: number;
+
+    if(!isNaN(Number(args[2]))) target = Number(args[2])
+
+    for (let i = 2; i < args.length; i++) {
+        if (isNaN(Number(args[i]))) throw new Error("Not all values provided are numbers!");
+        exerciseArray.push(Number(args[i]))
+    }
+
+    return {
+        exerciseArray,
+        target
+    }
+}
 
 const calculateExercises = ( array: number[], target: number ): DailyExercise => {
-    const periodLength = array.length
+
+    const periodLength = array.length - 1
     let trainingDays = periodLength;
     for( let i = 0; i < array.length; i++) {
         if(array[i] === 0) trainingDays -= 1
@@ -36,4 +53,11 @@ const calculateExercises = ( array: number[], target: number ): DailyExercise =>
 
 }
 
-console.log(calculateExercises(daylyExerciseHours, target))
+try {
+    const { target, exerciseArray } = processArguments(process.argv);
+    console.log(calculateExercises(exerciseArray, target))
+} catch (error: unknown) {
+    let errorMessage = "Something went wrong: ";
+    if ( error instanceof Error ) errorMessage += error.message;
+    console.log(errorMessage);
+}
