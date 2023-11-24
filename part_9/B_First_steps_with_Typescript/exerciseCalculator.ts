@@ -13,9 +13,8 @@ const processArguments = ( args: string[] ) => {
     if(args.length < 4) throw new Error("Too many arguments");
 
     let exerciseArray: number[] = [];
-    let target: number;
 
-    if(!isNaN(Number(args[2]))) target = Number(args[2])
+    if(isNaN(Number(args[2]))) throw new Error("3rd argument must be a number"); 
 
     for (let i = 2; i < args.length; i++) {
         if (isNaN(Number(args[i]))) throw new Error("Not all values provided are numbers!");
@@ -24,7 +23,7 @@ const processArguments = ( args: string[] ) => {
 
     return {
         exerciseArray,
-        target
+        target: Number(args[2])
     }
 }
 
