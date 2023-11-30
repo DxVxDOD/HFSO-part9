@@ -6,7 +6,11 @@ const router = express.Router();
 router.get("/", (_req, res) => {
 	const allPatients = patientService.getPatientsNoSSN();
 
-	res.send(allPatients);
+	res.json(allPatients);
+});
+
+router.post("/", (req, res) => {
+	const {} = req.body;
 });
 
 export default router;

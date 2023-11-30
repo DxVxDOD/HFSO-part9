@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/", (_req, res) => {
 	const allDiagnoses = diagnosesService.getDiagnoses();
 
-	res.send(allDiagnoses);
+	res.json(allDiagnoses);
 });
 
 router.post("/", (_req, res) => {
